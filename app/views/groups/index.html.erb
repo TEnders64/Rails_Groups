@@ -1,1 +1,48 @@
-<h1>Hello</h1>
+<h1>Hi <%= @user.first_name %> <%=@user.last_name %>!</h1>
+<h3>Here are the groups you may join</h3>
+<div id="groups">
+	<% @groups.each do |g| %>
+		<a href="/groups/<%= g.id %>"><h5><%= g.title %></h5></a>
+		<p>Members: <%= g.members.count %></p>
+		<p><%= g.description %></p>
+	<% end %>
+</div>
+<div id="new_group">
+	<h5>Create a new group</h5>
+	<div id="message">
+
+	</div>
+	<form id="group_create">
+		<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+		<label>Title
+			<input type="text" name="group[title]" />
+		</label>
+		<label>Description
+			<textarea name="group[description]"></textarea>
+		</label>
+		<input type="submit" value="Create Group" />
+	</form>
+</div>
+<script>
+	$(document).ready(function(){
+		$('#new_group').on('submit', 'form', function(){
+			event.preventDefault();
+			$.post('/groups', $(this).serialize(), function(data){
+				$('#message').html('');
+				$('#group_create').replaceWith('');
+				if (data.errors){
+					for(var i=0; i < data.messages.length; i++){
+						$('#message').append('<p>'+data.messages[i]+'</p>');
+					}
+				}else{
+					console.log(data);
+					// $('#groups').prepend(data);
+					$('#groups').prepend('<a href="/groups/'+data.group.id+'"><h5>'+data.group.title+'</h5></a>
+		<p>Members: 3</p>');
+				}
+			}, 'json');
+
+		});
+
+	})
+</script>

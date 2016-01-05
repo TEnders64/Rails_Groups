@@ -3,5 +3,6 @@ class Group < ActiveRecord::Base
   has_many :memberships
   has_many :members, through: :memberships, source: :user
 
-  validates :title, :description, presence: true
+  validates :title, presence: true, length: {minimum: 6}
+  validates :description, presence: true, length: {minimum: 11}
 end
