@@ -1,5 +1,6 @@
 <div id = 'container'>
 	<div id = 'message'>
+
 	</div>
 
 	<div id='registration'>
@@ -16,10 +17,10 @@
 			<input type="text" name="user[email]" />
 			</label>
 			<label>Password:
-			<input type="text" name="user[password]" />
+			<input type="password" name="user[password]" />
 			</label>
 			<label>Confirm Password:
-			<input type="text" name="user[password_confirm]" />
+			<input type="password" name="user[password_confirm]" />
 			</label>
 			<input type="submit" value="Submit" />
 		</form>
@@ -45,7 +46,7 @@
 		//Set listener for form submission
 
 		$('form').submit(function(){
-			event.preventDefault()
+			event.preventDefault();
 			console.log('Form Submitted');
 
 			//Identify which form was submitted
@@ -66,9 +67,17 @@
 
 			$.post(route, data, function(data){
 				console.log('Data received from Ajax post request',data);
+				if(!data.errors){
+					$('#'+form).remove();
+					$('#message').html("<p>"+data.message+"</p>");
+				} else {
+					$('#message').html('');
+					for (msg in data.message){
+						$('#message').append("<p>"+data.message[msg]+"</p>");
+					}
+				}
 			}, 'json')
 
 		})
-
 	})
 </script>

@@ -6,16 +6,15 @@ class UsersController < ApplicationController
   def create
     puts 'Users#create'
   	user = User.new( user_params )
-    puts user
+
   	user.password_confirmation = params[:user][:password_confirm]
+
   	if user.valid?
   		user.save
-  		flash[:message] = "User registered successfully, Please log in"
+      render json: {:errors => false, :message => "User registered successfully, Please log in"}
   	else
-  		flash[:errors] = user.errors.full_messages
+      render json: {:errors => true, :message => user.errors.full_messages}
   	end
-  	# redirect_to "/main"
-  	render json: {:message => "Hello World", :errors => "Errors go here"}
   end
 
   private

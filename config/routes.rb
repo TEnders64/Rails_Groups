@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   get 'groups/create'
 
-  get 'groups/show'
+  get 'groups' => 'groups#index'
 
   get 'groups/destroy'
 
