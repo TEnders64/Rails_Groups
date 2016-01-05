@@ -7,19 +7,19 @@
 		<form action="/users" method="post">
 			<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
 			<label>First Name: 
-			<input type="text" name="users[first_name]" />
+			<input type="text" name="user[first_name]" />
 			</label>
 			<label>Last Name: 
-			<input type="text" name="users[last_name]" />
+			<input type="text" name="user[last_name]" />
 			</label>
 			<label>Email:
-			<input type="text" name="users[email]" />
+			<input type="text" name="user[email]" />
 			</label>
 			<label>Password:
-			<input type="text" name="users[password]" />
+			<input type="text" name="user[password]" />
 			</label>
 			<label>Confirm Password:
-			<input type="text" name="users[password_confirm]" />
+			<input type="text" name="user[password_confirm]" />
 			</label>
 			<input type="submit" value="Submit" />
 		</form>
@@ -50,19 +50,21 @@
 
 			//Identify which form was submitted
 
-			var data = $(this).parent().attr('id')
+			var form = $(this).parent().attr('id')
+			var data = $(this).serialize()
+
 			var route
 
-			if (data === 'login'){
+			if (form === 'login'){
 				console.log('Login form');
-				route = '/login'
+				route = '/sessions/login'
 
-			} else if (data === 'registration'){
+			} else if (form === 'registration'){
 				console.log('Registration form')
 				route = '/users/create'
 			}
 
-			$.post(route, note, function(data){
+			$.post(route, data, function(data){
 				console.log('Data received from Ajax post request',data);
 			}, 'json')
 

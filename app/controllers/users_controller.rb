@@ -4,7 +4,9 @@ class UsersController < ApplicationController
   end
 
   def create
+    puts 'Users#create'
   	user = User.new( user_params )
+    puts user
   	user.password_confirmation = params[:user][:password_confirm]
   	if user.valid?
   		user.save

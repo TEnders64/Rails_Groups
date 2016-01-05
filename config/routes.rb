@@ -7,13 +7,13 @@ Rails.application.routes.draw do
 
   get 'groups/destroy'
 
-  get 'sessions/login'
+  post 'sessions/login'
 
   get 'sessions/logout'
 
   get 'users/new'
 
-  get 'users/create'
+  post 'users/create' => 'users#create'
 
   resources :groups
   get 'main' => 'users#new'
