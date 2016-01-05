@@ -27,13 +27,13 @@
 	</div>
 	<div id='login'>
 		<h1>Login</h1>
-		<form action="/users" method="post">
+		<form action="/sessions" method="post">
 			<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
 			<label>Email:
-			<input type="text" name="users[email]" />
+			<input type="text" name="user[email]" />
 			</label>
 			<label>Password:
-			<input type="text" name="users[password]" />
+			<input type="text" name="user[password]" />
 			</label>
 			<input type="submit" value="Submit" />
 		</form>
@@ -46,7 +46,7 @@
 		//Set listener for form submission
 
 		$('form').submit(function(){
-			event.preventDefault();
+			// event.preventDefault();
 			console.log('Form Submitted');
 
 			//Identify which form was submitted

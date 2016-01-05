@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   get 'groups/destroy'
 
-  post 'sessions/login'
+  post 'sessions/login' => 'sessions#login'
 
   get 'sessions/logout'
 
