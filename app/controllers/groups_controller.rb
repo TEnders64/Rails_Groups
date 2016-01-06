@@ -30,6 +30,12 @@ class GroupsController < ApplicationController
   end
 
   def destroy
+    group_to_delete = params[:id]
+
+    Group.destroy(group_to_delete);
+
+    render json: {message: 'Deleted'}
+
   end
 
   private 

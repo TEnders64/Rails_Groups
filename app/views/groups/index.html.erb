@@ -2,9 +2,14 @@
 <h3>Here are the groups you may join</h3>
 <div id="groups">
 	<% @groups.each do |g| %>
-		<a href="/groups/<%= g.id %>"><h5><%= g.title %></h5></a>
-		<p>Members: <%= g.members.count %></p>
-		<p><%= g.description %></p>
+		<div class = 'group'>
+			<% if g.user_id == session[:user_id] %>
+				<button id = '<%= g.id %>' class = 'delete'>Delete</button>
+			<% end %>
+			<a href="/groups/<%= g.id %>"><h5><%= g.title %></h5></a>
+			<p>Members: <%= g.members.count %></p>
+			<p><%= g.description %></p>
+		</div>
 	<% end %>
 </div>
 <div id="new_group">
@@ -39,14 +44,25 @@
 					$('#group_create').replaceWith('<form id="group_create"><input type="hidden" name="authenticity_token" value="'+data.token+'" /><label>Title<input type="text" name="group[title]" /></label><label>Description<textarea name="group[description]"></textarea></label><input type="submit" value="Create Group" /></form>');
 					// $('#groups').prepend(data);
 					// $('#groups').prepend('<a href="/groups/'+data.group.id+'"><h5>'+data.group.title+'</h5></a><p>Members: '+data.group.size+'</p><p>'+data.group.description+'</p>');
-					
-					$('#groups').prepend('<a href="/groups/'+data.group.id+'"><h5>'+data.group.title+'</h5></a><p>Members: '+data.count+'</p><p>'+data.group.description+'</p>');
+
+					$('#groups').prepend('<div class = "group"><button id = '+data.group.id+'class = "delete">Delete</button><a href="/groups/'+data.group.id+'"><h5>'+data.group.title+'</h5></a><p>Members: '+data.count+'</p><p>'+data.group.description+'</p></div>');
 					// xqXVoRajqsGJxg6hEUWz1qgshq0yT4ygvaTcPeb+7t8=
 					// xqXVoRajqsGJxg6hEUWz1qgshq0yT4ygvaTcPeb+7t8=
 				}
 			}, 'json');
 
 		});
+
+	$("#groups").on('click', 'button.delete', function(){
+		
+		$(this).parent().remove()
+		var group = $(this).attr('id')
+
+		$.post('/groups/delete/'+group, function(data) {
+			console.log('Delete callback', data)
+		})
+
+	})
 
 	})
 </script>

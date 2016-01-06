@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   post 'groups' => 'groups#create'
 
-  delete 'groups/destroy'
+  post 'groups/delete/:id' => 'groups#destroy'
 
   post 'sessions/login' => 'sessions#login'
 
