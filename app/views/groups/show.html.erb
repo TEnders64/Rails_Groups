@@ -1,18 +1,28 @@
+<div id = 'nav'>
 
+	<a href="/groups">Dashboard</a> | <a href="/logout">Logout</a>
+
+</div>
 <div id = 'group_container'>
 	
 
 	<h1><%= @group.title %></h1>
 
-
-	<% if @membership %>
-		<button id = 'leave'>Leave group</button>
-	<% else %>
-		<button id = 'join'>Join group</button>
-	<% end %>
+	<div id="membership">
+		<% if @membership %>
+			<button id="leave">Leave group</button>
+		<% else %>
+			<button id="join">Join group</button>
+		<% end %>
+	</div>
 
 	<h4><%= @group.description %></h4>
+
+	<% if @group.user_id == session[:user_id] %>
+	<p>Created by: YOU </p>
+	<% else %>
 	<p>Created by: <%= @group.user.first_name %> <%= @group.user.last_name %></p>
+	<% end %>
 
 	<p>Members:</p>
 
@@ -29,14 +39,23 @@
 
 		$('#group_container').on('click', 'button', function(){
 
-			var type = {type: $(this).attr('id')}
+			var type = {type: $(this).attr('id')};
 
 			$.post('/groups/'+<%= @group.id %>+'/update', type, function(data){
+				console.log(type);
 				console.log(data);
-			})
 
-		})
+				if (type.type === 'join'){
+					$('#membership').html('');
+					$('#membership').html('<button id="leave">Leave Group</button>');
+					$('ul').append('<li>'+data.user.first_name+' '+data.user.last_name+'</li>');
+				}else if (type.type === 'leave'){
+					$('#membership').html('');
+					$('#membership').html('<button id="join">Join Group</button>');
+					$('ul li:last-child').remove();
+				}
+			}, 'json');
+		});
 	})
-
 </script>
 
