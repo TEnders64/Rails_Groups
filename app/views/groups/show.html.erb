@@ -19,9 +19,9 @@
 	<h4><%= @group.description %></h4>
 
 	<% if @group.user_id == session[:user_id] %>
-	<p>Created by: YOU </p>
+		<p>Created by: YOU </p>
 	<% else %>
-	<p>Created by: <%= @group.user.first_name %> <%= @group.user.last_name %></p>
+		<p>Created by: <%= @group.user.first_name %> <%= @group.user.last_name %></p>
 	<% end %>
 
 	<p>Members:</p>

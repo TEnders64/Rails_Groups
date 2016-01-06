@@ -49,15 +49,14 @@
 			event.preventDefault();
 			console.log('Form Submitted');
 
-			//Identify which form was submitted
+			// var form = $(this).parent().attr('id')
 
-			var form = $(this).parent().attr('id')
 			var data = $(this).serialize()
 
 			$.post('/users/create', data, function(data){
 				console.log('Data received from Ajax post request',data);
 				if(!data.errors){
-					$('#'+form).remove();
+					$('#registration').remove();
 					$('#message').html("<p>"+data.message+"</p>");
 				} else {
 					$('#message').html('');
