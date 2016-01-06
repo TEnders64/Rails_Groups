@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
 
   def index
-  	@groups = Group.all()
+  	@groups = Group.all
   	@user = User.select("first_name, last_name").find_by_id(session[:user_id])
   end
   
@@ -14,8 +14,13 @@ class GroupsController < ApplicationController
   	group[:user_id] = user.id
   	if group.valid?
   		group.save
-  		Membership.create(:user => user, :group => group)
-  		render json: {errors: false, group: group}
+  		Membership.create(:user_id => user.id, :group_id => Group.last.id)
+  		# @groups = Group.all()
+  		group = Group.last
+  		count = group.members.count
+  		authToken = form_authenticity_token
+  		puts authToken
+  		render json: {errors: false, group: group, count: count, token: authToken}
   	else
   		render json: {errors: true, messages: group.errors.full_messages}
   	end
