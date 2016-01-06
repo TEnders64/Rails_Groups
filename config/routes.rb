@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  get 'groups/new'
-
-  get 'groups/create'
 
   get 'groups' => 'groups#index'
 
@@ -15,12 +12,10 @@ Rails.application.routes.draw do
 
   post 'sessions/login' => 'sessions#login'
 
-  get 'sessions/logout'
-
-  get 'users/new'
+  get 'logout' => 'sessions#logout'
 
   post 'users/create' => 'users#create'
 
-  resources :groups
   get 'main' => 'users#new'
+  
 end

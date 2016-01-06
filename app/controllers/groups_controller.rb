@@ -40,13 +40,14 @@ class GroupsController < ApplicationController
   end
 
   def update
+
     if params[:type] == 'join'
       Group.find(params[:id]).memberships.create(:user_id => session[:user_id])
-
-      render json: {message: 'joined'}
+      user = User.select('first_name, last_name').find(session[:user_id])
+      render json: {message: 'joined', user: user}
 
     elsif params[:type] == 'leave'
-      membership = Membership.find(:group_id => params[:id], :user_id => session[:user_id])
+      membership = Membership.find_by(:group_id => params[:id], :user_id => session[:user_id])
       membership.destroy()
 
       render json: {message: 'removed'}
