@@ -1,2 +1,44 @@
-<h1>Groups#show</h1>
-<p>Find me in app/views/groups/show.html.erb</p>
+
+<div id = 'group_container'>
+	
+
+	<h1><%= @group.title %></h1>
+
+
+	<% if @membership %>
+		<button id = 'leave'>Leave group</button>
+	<% else %>
+		<button id = 'join'>Join group</button>
+	<% end %>
+
+	<h4><%= @group.description %></h4>
+	<p>Created by: <%= @group.user.first_name %> <%= @group.user.last_name %></p>
+
+	<p>Members:</p>
+
+	<ul>
+		<% @group.members.each do |member| %>
+			<li><%= member.first_name %> <%= member.last_name %></li>
+		<% end %>
+	</ul>
+
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$('#group_container').on('click', 'button', function(){
+
+			var type = {type: $(this).attr('id')}
+
+			$.post('/groups/'+<%= @group.id %>+'/update', type, function(data){
+				console.log(data);
+			})
+
+
+
+		})
+	})
+
+</script>
+

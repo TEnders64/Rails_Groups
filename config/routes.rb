@@ -7,6 +7,10 @@ Rails.application.routes.draw do
 
   post 'groups' => 'groups#create'
 
+  get 'groups/:id' => 'groups#show'
+  
+  post 'groups/:id/update' => 'groups#update'
+
   post 'groups/delete/:id' => 'groups#destroy'
 
   post 'sessions/login' => 'sessions#login'

@@ -27,6 +27,32 @@ class GroupsController < ApplicationController
   end
 
   def show
+    @group = Group.find(params[:id])
+
+    @membership = false
+
+    @group.members.each do |member|
+      if member.id == session['user_id']
+        @membership = true
+      end
+    end
+
+  end
+
+  def update
+    if params[:type] == 'join'
+      Group.find(params[:id]).memberships.create(:user_id => session[:user_id])
+
+      render json: {message: 'joined'}
+
+    elsif params[:type] == 'leave'
+      membership = Membership.find(:group_id => params[:id], :user_id => session[:user_id])
+      membership.destroy()
+
+      render json: {message: 'removed'}
+    end
+    puts params
+
   end
 
   def destroy
