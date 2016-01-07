@@ -6,26 +6,23 @@ class GroupsController < ApplicationController
   end
 
   def create
-  	group = Group.new( groups_params )
+  	@group = Group.new( groups_params )
   	user = User.find(session[:user_id])
-  	group[:user_id] = user.id
-  	if group.valid?
-  		group.save
+  	@group[:user_id] = user.id
+  	if @group.valid?
+  		@group.save
   		Membership.create(:user_id => user.id, :group_id => Group.last.id)
   		# @groups = Group.all()
-  		group = Group.last
-  		count = group.members.count
+  		@group = Group.last
+  		count = @group.members.count
 
-      # Create new authenticity token... code needs updating
-  		authToken = form_authenticity_token
-  		puts authToken
-      # /////////////////////////////
+      render :partial => 'new_org', :object => @group
 
-  		render json: {errors: false, group: group, count: count, token: authToken}
   	else
   		render json: {errors: true, messages: group.errors.full_messages}
   	end
   end
+
 
   def show
     @group = Group.find(params[:id])

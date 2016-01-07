@@ -1,0 +1,16 @@
+<div id="new_group">
+	<h5>Create a new group</h5>
+	<div id="message">
+
+	</div>
+	<form id="group_create">
+		<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+		<label>Title
+			<input type="text" name="group[title]" />
+		</label>
+		<label>Description
+			<textarea name="group[description]"></textarea>
+		</label>
+		<input type="submit" value="Create Group" />
+	</form>
+</div>

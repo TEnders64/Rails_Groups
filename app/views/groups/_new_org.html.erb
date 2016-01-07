@@ -1,0 +1,7 @@
+<div class = 'group'>
+	<button id = '<%= @group.id %>' class = 'delete'>Delete</button>
+	<a href="/groups/<%= @group.id %>"><h5><%= @group.title %></h5></a>
+	<p>Members: <%= @group.members.count %></p>
+	<p><%= @group.description %></p>
+</div>
+
